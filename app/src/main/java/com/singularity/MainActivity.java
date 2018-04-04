@@ -1,6 +1,7 @@
 package com.singularity;
 
 import android.animation.Animator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
@@ -23,6 +24,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initialize();
         animateLogo();
+        onActionPerform();
+    }
+
+    private void onActionPerform() {
+
+        fbNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getBaseContext(),MapActivity.class));
+            }
+        });
+
     }
 
     private void animateLogo() {
