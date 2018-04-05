@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -12,19 +13,32 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ImageView;
 
+import in.creativelizard.androidpermission.CreativePermission;
+
 public class MainActivity extends AppCompatActivity {
 
     private ImageView imgLogo;
     private ConstraintLayout clMain;
     private CardView cvUser,cvPass;
     private FloatingActionButton fbNext;
+    private static final int PERMISSION_ALL = 100;
+    private CreativePermission myPermission;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initialize();
-        animateLogo();
+        checkPermission();
         onActionPerform();
+    }
+
+    private void checkPermission() {
+        if (!myPermission.hasPermissions()) {
+            myPermission.reqPermisions();
+            }else {
+            animateLogo();
+        }
     }
 
     private void onActionPerform() {
@@ -86,10 +100,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initialize() {
+        myPermission = new CreativePermission(this,PERMISSION_ALL);
         imgLogo = findViewById(R.id.imgLogo);
         clMain = findViewById(R.id.clMain);
         cvUser = findViewById(R.id.cvUser);
         cvPass = findViewById(R.id.cvPass);
         fbNext = findViewById(R.id.fbNext);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode == PERMISSION_ALL) {
+            animateLogo();
+
+        }
     }
 }
