@@ -85,15 +85,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onResume() {
         super.onResume();
-        flDrawingMode.setVisibility(View.GONE);
         mapFragment.onResume();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mapFragment.onDestroy();
-    }
 
     private void activityTransition() {
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
@@ -115,6 +109,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private void initialize() {
         flDrawingMode = findViewById(R.id.flDrawingMode);
+        flDrawingMode.setVisibility(View.GONE);
         IS_DRAWING_MODE = false;
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
