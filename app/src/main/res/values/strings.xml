@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Singularity</string>
+    <string name="desc">you have to verify user by entering your registered User ID and password.</string>
 </resources>

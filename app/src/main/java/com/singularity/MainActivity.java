@@ -16,6 +16,7 @@ import android.transition.Explode;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import in.creativelizard.androidpermission.CreativePermission;
 
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fbNext;
     private static final int PERMISSION_ALL = 100;
     private CreativePermission myPermission;
+    private LinearLayout llLoginDesc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +96,8 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onAnimationEnd(Animator animator) {
-
+                        llLoginDesc.setVisibility(View.VISIBLE);
+                        llLoginDesc.animate().alpha(1).translationY(70).setDuration(1000);
                         imgLogo.clearAnimation();
                         clMain.setBackgroundColor(Color.WHITE);
                         imgLogo.setVisibility(View.GONE);
@@ -127,6 +130,9 @@ public class MainActivity extends AppCompatActivity {
         cvUser = findViewById(R.id.cvUser);
         cvPass = findViewById(R.id.cvPass);
         fbNext = findViewById(R.id.fbNext);
+        llLoginDesc = findViewById(R.id.llLoginDesc);
+        llLoginDesc.setVisibility(View.GONE);
+        llLoginDesc.setAlpha(0);
     }
 
     @Override
