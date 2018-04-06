@@ -18,26 +18,41 @@
         android:layout_height="match_parent"
         android:id="@+id/flLoader"
         android:background="@color/colorPrimaryDark"/>
-        <FrameLayout
+        <RelativeLayout
             android:id="@+id/flDrawingMode"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#8affffff"
-            />
+            >
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btnDrawMap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_gesture_black"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="80dp"
+
+                android:backgroundTint="@color/white" />
+        </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fbMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
         android:layout_marginTop="12dp"
+        android:src="@drawable/ic_create"
         android:transitionName="fbNext"
         android:clickable="true"
-        android:src="@drawable/ic_gesture_black"
         android:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

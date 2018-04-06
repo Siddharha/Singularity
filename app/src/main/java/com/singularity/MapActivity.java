@@ -6,10 +6,12 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.Image;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,10 +21,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.Explode;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -38,8 +43,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -49,7 +60,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private GoogleMap gmap;
     private FloatingActionButton fbMenu;
     private boolean IS_DRAWING_MODE;
-    private FrameLayout flDrawingMode;
+    private RelativeLayout flDrawingMode;
+    private FloatingActionButton btnDrawMap;
+
+    private ArrayList<Point> points;
+    private ArrayList<LatLng> latLngs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +92,82 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     IS_DRAWING_MODE = false;
                     gmap.getUiSettings().setScrollGesturesEnabled(true);
                     flDrawingMode.setVisibility(View.GONE);
+
+                    clearChildPointsAndPointData();
+
                 }
             }
         });
+
+flDrawingMode.setOnTouchListener(handleTouch);
+
+btnDrawMap.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+
+        if (points.size() > 0) {
+            for (Point point : points) {
+                latLngs.add(gmap.getProjection().fromScreenLocation(point));
+
+            }
+
+            drawPoly();
+        }else fbMenu.performClick();
     }
+});
+    }
+
+    private void clearChildPointsAndPointData() {
+        latLngs.clear();
+        points.clear();
+
+        flDrawingMode.removeViews(1,flDrawingMode.getChildCount()-1);
+    }
+
+    private void drawPoly() {
+        PolylineOptions polylineOptions = new PolylineOptions().geodesic(true).width(5).color(Color.BLACK);
+        polylineOptions.addAll(latLngs);
+        polylineOptions.add(latLngs.get(0));
+
+        Polyline line = gmap.addPolyline(polylineOptions);
+        clearChildPointsAndPointData();
+    }
+
+    private View.OnTouchListener handleTouch = new View.OnTouchListener() {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            ImageView imageView;
+
+            int x = (int) event.getX();
+            int y = (int) event.getY();
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    Log.i("TAG", "touched down");
+
+                        imageView = new ImageView(getBaseContext());
+                        imageView.setImageResource(R.drawable.points);
+                        imageView.setScaleType(ImageView.ScaleType.CENTER);
+                        flDrawingMode.addView(imageView);
+                        imageView.setX(x);
+                        imageView.setY(y);
+
+                        points.add(new Point(x,y));
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    Log.i("TAG", "moving: (" + x + ", " + y + ")");
+
+                    break;
+                case MotionEvent.ACTION_UP:
+                    Log.i("TAG", "touched up");
+                    break;
+            }
+
+            return true;
+        }
+    };
+
 
     @Override
     public void onResume() {
@@ -108,6 +195,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void initialize() {
+        points = new ArrayList<>();
+        latLngs = new ArrayList<>();
+        btnDrawMap = findViewById(R.id.btnDrawMap);
         flDrawingMode = findViewById(R.id.flDrawingMode);
         flDrawingMode.setVisibility(View.GONE);
         IS_DRAWING_MODE = false;
@@ -219,5 +309,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             gmap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
     }
+
 
 }
