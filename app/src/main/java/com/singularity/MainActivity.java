@@ -1,8 +1,10 @@
 package com.singularity;
 
 import android.animation.Animator;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -10,7 +12,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.transition.Explode;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 
 import in.creativelizard.androidpermission.CreativePermission;
@@ -27,10 +31,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activityTransition();
         setContentView(R.layout.activity_main);
         initialize();
         checkPermission();
         onActionPerform();
+    }
+
+    private void activityTransition() {
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setExitTransition(new Explode());
+        }
     }
 
     private void checkPermission() {
@@ -46,7 +58,16 @@ public class MainActivity extends AppCompatActivity {
         fbNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getBaseContext(),MapActivity.class));
+                Intent intent = new Intent(getBaseContext(),MapActivity.class);
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                ActivityOptions options = ActivityOptions
+                                        .makeSceneTransitionAnimation(MainActivity.this, fbNext, "fbNext");
+                        // start the new activity
+                        startActivity(intent, options.toBundle());
+                    }else {
+                        startActivity(intent);
+                    }
             }
         });
 

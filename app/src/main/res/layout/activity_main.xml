@@ -78,6 +78,7 @@
         app:elevation="3dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
+        android:transitionName="fbNext"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
