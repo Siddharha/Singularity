@@ -17,9 +17,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/flLoader"
-        android:background="@color/colorPrimaryDark">
-
-    </FrameLayout>
+        android:background="@color/colorPrimaryDark"/>
+        <FrameLayout
+            android:id="@+id/flDrawingMode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#8affffff"
+            />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fbMenu"

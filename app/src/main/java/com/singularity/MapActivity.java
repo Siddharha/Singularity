@@ -49,6 +49,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private GoogleMap gmap;
     private FloatingActionButton fbMenu;
     private boolean IS_DRAWING_MODE;
+    private FrameLayout flDrawingMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +69,30 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             public void onClick(View view) {
                 if(!IS_DRAWING_MODE){
                     fbMenu.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
+                    gmap.getUiSettings().setScrollGesturesEnabled(false);
+                    flDrawingMode.setVisibility(View.VISIBLE);
                     IS_DRAWING_MODE = true;
                 }else {
-                    fbMenu.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+                    fbMenu.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryDark)));
                     IS_DRAWING_MODE = false;
+                    gmap.getUiSettings().setScrollGesturesEnabled(true);
+                    flDrawingMode.setVisibility(View.GONE);
                 }
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        flDrawingMode.setVisibility(View.GONE);
+        mapFragment.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mapFragment.onDestroy();
     }
 
     private void activityTransition() {
@@ -96,6 +114,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void initialize() {
+        flDrawingMode = findViewById(R.id.flDrawingMode);
         IS_DRAWING_MODE = false;
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -198,7 +217,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
-                    .zoom(12)                   // Sets the zoom
+                    .zoom(15)                   // Sets the zoom
                     .bearing(0)                // Sets the orientation of the camera to east
                     .tilt(0)                   // Sets the tilt of the camera to 30 degrees
                     .build();                   // Creates a CameraPosition from the builder
