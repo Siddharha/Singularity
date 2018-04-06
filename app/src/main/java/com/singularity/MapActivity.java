@@ -5,6 +5,7 @@ import android.animation.Animator;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.location.Criteria;
@@ -43,6 +44,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -65,6 +67,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private ArrayList<Point> points;
     private ArrayList<LatLng> latLngs;
+    private String TAG = "style_map";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,6 +217,19 @@ btnDrawMap.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         //Toast.makeText(this, "Map Loaded!", Toast.LENGTH_SHORT).show();
+        try {
+            // Customise the styling of the base map using a JSON object defined
+            // in a raw resource file.
+            boolean success = googleMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            this, R.raw.map_style));
+
+            if (!success) {
+                Log.e(TAG, "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.e(TAG, "Can't find style. Error: ", e);
+        }
 
         if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -302,7 +318,7 @@ btnDrawMap.setOnClickListener(new View.OnClickListener() {
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
-                    .zoom(15)                   // Sets the zoom
+                    .zoom(12)                   // Sets the zoom
                     .bearing(0)                // Sets the orientation of the camera to east
                     .tilt(0)                   // Sets the tilt of the camera to 30 degrees
                     .build();                   // Creates a CameraPosition from the builder
