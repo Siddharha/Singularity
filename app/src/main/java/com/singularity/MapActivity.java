@@ -4,6 +4,8 @@ import android.Manifest;
 import android.animation.Animator;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -11,6 +13,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdate;
@@ -43,6 +47,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private FrameLayout flLoader;
     private int RQS_GooglePlayServices = 101;
     private GoogleMap gmap;
+    private FloatingActionButton fbMenu;
+    private boolean IS_DRAWING_MODE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +59,24 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         checkPlaystervice();
         showMap();
         animateMapApear();
+        onActionPerform();
     }
+
+    private void onActionPerform() {
+        fbMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!IS_DRAWING_MODE){
+                    fbMenu.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
+                    IS_DRAWING_MODE = true;
+                }else {
+                    fbMenu.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+                    IS_DRAWING_MODE = false;
+                }
+            }
+        });
+    }
+
     private void activityTransition() {
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -62,20 +85,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void checkPlaystervice() {
-        int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
+        int status = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
         if (status == ConnectionResult.SUCCESS) {
             //alarm to go and install Google Play Services
         } else if (status == ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED) {
             // Toast.makeText(this,"please udpate your google play service",Toast.LENGTH_SHORT).show();
-            GooglePlayServicesUtil.getErrorDialog(status, this, RQS_GooglePlayServices).show();
+           // GooglePlayServicesUtil.getErrorDialog(status, this, RQS_GooglePlayServices).show();
+            GoogleApiAvailability.getInstance().getErrorDialog(this,status,RQS_GooglePlayServices).show();
         }
     }
 
     private void initialize() {
+        IS_DRAWING_MODE = false;
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         flLoader = findViewById(R.id.flLoader);
-
+        fbMenu = findViewById(R.id.fbMenu);
     }
 
     private void showMap() {

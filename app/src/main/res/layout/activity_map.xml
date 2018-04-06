@@ -33,7 +33,7 @@
         android:layout_marginTop="12dp"
         android:transitionName="fbNext"
         android:clickable="true"
-        android:src="@drawable/ic_menu_black"
+        android:src="@drawable/ic_gesture_black"
         android:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
