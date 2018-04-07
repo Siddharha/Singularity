@@ -1,4 +1,4 @@
-package com.singularity;
+package com.singularity.application;
 
 import android.app.Application;
 

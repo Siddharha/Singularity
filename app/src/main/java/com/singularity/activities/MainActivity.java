@@ -1,4 +1,4 @@
-package com.singularity;
+package com.singularity.activities;
 
 import android.animation.Animator;
 import android.app.ActivityOptions;
@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.singularity.R;
 
 import in.creativelizard.androidpermission.CreativePermission;
 
