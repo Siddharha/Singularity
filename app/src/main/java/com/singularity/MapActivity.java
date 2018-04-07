@@ -68,7 +68,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private ArrayList<Point> points;
     private ArrayList<LatLng> latLngs;
     private String TAG = "style_map";
-
+    private ImageView imgMenu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -198,6 +198,7 @@ btnDrawMap.setOnClickListener(new View.OnClickListener() {
     }
 
     private void initialize() {
+        imgMenu = findViewById(R.id.imgMenu);
         points = new ArrayList<>();
         latLngs = new ArrayList<>();
         btnDrawMap = findViewById(R.id.btnDrawMap);
@@ -216,6 +217,9 @@ btnDrawMap.setOnClickListener(new View.OnClickListener() {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
+        googleMap.getUiSettings().setRotateGesturesEnabled(false);
+
         //Toast.makeText(this, "Map Loaded!", Toast.LENGTH_SHORT).show();
         try {
             // Customise the styling of the base map using a JSON object defined

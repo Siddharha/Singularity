@@ -6,4 +6,5 @@
     <color name="transparent">#00ffffff</color>
     <color name="white">#ffffffff</color>
     <color name="red">#ff3d00</color>
+    <color name="semi_traansparent">#96ffffff</color>
 </resources>
