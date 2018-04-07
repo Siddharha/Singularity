@@ -18,14 +18,18 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.Explode;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -69,6 +73,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private ArrayList<LatLng> latLngs;
     private String TAG = "style_map";
     private ImageView imgMenu;
+    private DrawerLayout dvMenu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,7 +120,16 @@ btnDrawMap.setOnClickListener(new View.OnClickListener() {
             }
 
             drawPoly();
-        }else fbMenu.performClick();
+        }else {
+            fbMenu.performClick();
+        }
+    }
+});
+
+imgMenu.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        dvMenu.openDrawer(Gravity.LEFT);
     }
 });
     }
@@ -152,6 +166,7 @@ btnDrawMap.setOnClickListener(new View.OnClickListener() {
                         imageView = new ImageView(getBaseContext());
                         imageView.setImageResource(R.drawable.points);
                         imageView.setScaleType(ImageView.ScaleType.CENTER);
+
                         flDrawingMode.addView(imageView);
                         imageView.setX(x);
                         imageView.setY(y);
@@ -198,6 +213,7 @@ btnDrawMap.setOnClickListener(new View.OnClickListener() {
     }
 
     private void initialize() {
+        dvMenu = findViewById(R.id.dvMenu);
         imgMenu = findViewById(R.id.imgMenu);
         points = new ArrayList<>();
         latLngs = new ArrayList<>();

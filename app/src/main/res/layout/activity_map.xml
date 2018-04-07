@@ -5,69 +5,88 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.singularity.MapActivity">
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.v4.widget.DrawerLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/map"
-        tools:context="com.eparivahan.activities.commonModule.TrackVehiclesDetailsActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/flLoader"
-        android:background="@color/colorPrimaryDark"/>
+        android:id="@+id/dvMenu">
         <RelativeLayout
-            android:id="@+id/flDrawingMode"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#8affffff"
-            >
+            android:layout_height="match_parent">
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/map"
+                tools:context="com.eparivahan.activities.commonModule.TrackVehiclesDetailsActivity"
+                android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/flLoader"
+                android:background="@color/colorPrimaryDark"/>
+            <RelativeLayout
+                android:id="@+id/flDrawingMode"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#8affffff"
+                >
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/btnDrawMap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_gesture_black"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginTop="80dp"
+
+                    android:backgroundTint="@color/white" />
+
+
+            </RelativeLayout>
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/btnDrawMap"
+                android:id="@+id/fbMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_gesture_black"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="12dp"
+                android:layout_alignParentTop="true"
                 android:layout_marginEnd="12dp"
-                android:layout_marginTop="80dp"
-
-                android:backgroundTint="@color/white" />
-
-
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="12dp"
+                android:src="@drawable/ic_create"
+                android:transitionName="fbNext"
+                android:clickable="true"
+                android:backgroundTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+            <ImageView
+                android:id="@+id/imgMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/semi_traansparent"
+                android:src="@drawable/ic_menu_black" />
         </RelativeLayout>
+        <LinearLayout
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:layout_gravity="start">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fbMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginTop="12dp"
-        android:src="@drawable/ic_create"
-        android:transitionName="fbNext"
-        android:clickable="true"
-        android:backgroundTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-    <ImageView
-        android:id="@+id/imgMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/semi_traansparent"
-        android:src="@drawable/ic_menu_black" />
+        </LinearLayout>
+    </android.support.v4.widget.DrawerLayout>
+
+
+
 </RelativeLayout>
