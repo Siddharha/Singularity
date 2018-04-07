@@ -5,17 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.singularity.activities.CapturedDataActivity">
+    tools:context="com.singularity.activities.CapturedItemForm">
     <android.support.v7.widget.Toolbar
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-    android:transitionName="cptData"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rlCapturedData"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:transitionName="tvCapture"/>
 
 </LinearLayout>

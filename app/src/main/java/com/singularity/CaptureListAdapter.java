@@ -1,13 +1,23 @@
 package com.singularity;
 
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.singularity.activities.CapturedDataActivity;
+import com.singularity.activities.CapturedItemForm;
+import com.singularity.activities.MainActivity;
+import com.singularity.activities.MapActivity;
 
 import java.util.ArrayList;
 
@@ -35,9 +45,27 @@ import java.util.ArrayList;
     }
 
     @Override
-    public void onBindViewHolder(CaptureListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final CaptureListAdapter.ViewHolder holder, final int position) {
 
         holder.tvCaptureId.setText("CAPTU#"+captureDataItems.get(position).getCaptureDataId());
+        holder.imgIndct.setColorFilter(Color.parseColor("#ff9900"));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(context, CapturedItemForm.class);
+
+                intent.putExtra("id",captureDataItems.get(position).getCaptureDataId());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptions options = ActivityOptions
+                            .makeSceneTransitionAnimation((CapturedDataActivity)context, holder.tvCaptureId, "tvCapture");
+                    // start the new activity
+                    context.startActivity(intent, options.toBundle());
+                }else {
+                    context.startActivity(intent);
+                }
+            }
+        });
         setAnimation(holder.itemView, position);
     }
 
@@ -48,9 +76,11 @@ import java.util.ArrayList;
 
      class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvCaptureId;
+        ImageView imgIndct;
          public ViewHolder(View itemView) {
              super(itemView);
              tvCaptureId = itemView.findViewById(R.id.tvCaptureId);
+             imgIndct = itemView.findViewById(R.id.imgIndct);
          }
      }
 
