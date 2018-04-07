@@ -2,7 +2,9 @@ package com.singularity;
 
 import android.Manifest;
 import android.animation.Animator;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -22,6 +24,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.Explode;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -33,6 +36,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -74,6 +78,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private String TAG = "style_map";
     private ImageView imgMenu;
     private DrawerLayout dvMenu;
+    private LinearLayout llCapturedData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,6 +137,25 @@ imgMenu.setOnClickListener(new View.OnClickListener() {
         dvMenu.openDrawer(Gravity.LEFT);
     }
 });
+
+        llCapturedData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dvMenu.closeDrawer(Gravity.LEFT);
+               Intent intent = new Intent(getBaseContext(),CapturedDataActivity.class);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptions options = ActivityOptions.
+                            makeSceneTransitionAnimation(MapActivity.this,
+                                    llCapturedData,
+                                    "cptData");
+                    // start the new activity
+                    startActivity(intent, options.toBundle());
+                }else {
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     private void clearChildPointsAndPointData() {
@@ -213,6 +237,7 @@ imgMenu.setOnClickListener(new View.OnClickListener() {
     }
 
     private void initialize() {
+        llCapturedData = findViewById(R.id.llCapturedData);
         dvMenu = findViewById(R.id.dvMenu);
         imgMenu = findViewById(R.id.imgMenu);
         points = new ArrayList<>();
