@@ -5,6 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -16,6 +19,7 @@ import java.util.ArrayList;
     private Context context;
     private int layout;
     private ArrayList<CaptureDataItem> captureDataItems;
+    private int lastPosition = -1;
 
     public CaptureListAdapter(Context context, int layout, ArrayList<CaptureDataItem> captureDataItems) {
         this.context = context;
@@ -33,6 +37,8 @@ import java.util.ArrayList;
     @Override
     public void onBindViewHolder(CaptureListAdapter.ViewHolder holder, int position) {
 
+        holder.tvCaptureId.setText("CAPTU#"+captureDataItems.get(position).getCaptureDataId());
+        setAnimation(holder.itemView, position);
     }
 
     @Override
@@ -41,8 +47,21 @@ import java.util.ArrayList;
     }
 
      class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tvCaptureId;
          public ViewHolder(View itemView) {
              super(itemView);
+             tvCaptureId = itemView.findViewById(R.id.tvCaptureId);
          }
      }
+
+    private void setAnimation(View viewToAnimate, int position)
+    {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition)
+        {
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_left);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
+    }
 }

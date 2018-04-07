@@ -4,7 +4,7 @@ package com.singularity;
  * Created by siddharthamaji on 07/04/18.
  */
 
-class CaptureDataItem {
+public class CaptureDataItem {
     private String dateOfRecord, fieldOwner,
             ownerEmailId, OwnerContact,
             OwnerAadharNo, FrameSize,
