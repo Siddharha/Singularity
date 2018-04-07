@@ -83,16 +83,41 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     fbMenu.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
                     gmap.getUiSettings().setScrollGesturesEnabled(false);
                     flDrawingMode.setVisibility(View.VISIBLE);
+                    flDrawingMode.animate().alpha(1);
                     IS_DRAWING_MODE = true;
                 }else {
                     fbMenu.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryDark)));
                     IS_DRAWING_MODE = false;
                     gmap.getUiSettings().setScrollGesturesEnabled(true);
-                    flDrawingMode.setVisibility(View.GONE);
 
+                    flDrawingMode.animate().alpha(0);
                     clearChildPointsAndPointData();
 
                 }
+            }
+        });
+
+        flDrawingMode.animate().setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                if(!IS_DRAWING_MODE){
+                    flDrawingMode.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
             }
         });
 
@@ -229,6 +254,7 @@ imgMenu.setOnClickListener(new View.OnClickListener() {
         btnDrawMap = findViewById(R.id.btnDrawMap);
         flDrawingMode = findViewById(R.id.flDrawingMode);
         flDrawingMode.setVisibility(View.GONE);
+        flDrawingMode.setAlpha(0);
         IS_DRAWING_MODE = false;
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
