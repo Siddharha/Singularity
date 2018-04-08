@@ -1,7 +1,10 @@
-package com.singularity;
+package com.singularity.database;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
+
+import com.singularity.interfaces.CaptureDataDao;
+import com.singularity.beans.CaptureDataItem;
 
 /**
  * Created by siddharthamaji on 08/04/18.

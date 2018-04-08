@@ -1,7 +1,6 @@
 package com.singularity.activities;
 
 import android.arch.persistence.room.Room;
-import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,12 +11,9 @@ import android.transition.Explode;
 import android.view.View;
 import android.view.Window;
 
-import com.singularity.AppDatabase;
-import com.singularity.CaptureDataItem;
-import com.singularity.CaptureListAdapter;
+import com.singularity.database.AppDatabase;
+import com.singularity.adapters.CaptureListAdapter;
 import com.singularity.R;
-
-import java.util.ArrayList;
 
 public class CapturedDataActivity extends AppCompatActivity {
 

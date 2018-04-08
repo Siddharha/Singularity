@@ -1,4 +1,4 @@
-package com.singularity;
+package com.singularity.adapters;
 
 import android.app.ActivityOptions;
 import android.content.Context;
@@ -14,12 +14,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.singularity.beans.CaptureDataItem;
+import com.singularity.R;
 import com.singularity.activities.CapturedDataActivity;
 import com.singularity.activities.CapturedItemForm;
-import com.singularity.activities.MainActivity;
-import com.singularity.activities.MapActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

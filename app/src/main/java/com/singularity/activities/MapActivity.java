@@ -43,8 +43,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.singularity.AppDatabase;
-import com.singularity.CaptureDataItem;
+import com.singularity.database.AppDatabase;
+import com.singularity.beans.CaptureDataItem;
 import com.singularity.R;
 
 import java.util.ArrayList;

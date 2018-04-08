@@ -1,10 +1,11 @@
-package com.singularity;
+package com.singularity.interfaces;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import java.util.ArrayList;
+import com.singularity.beans.CaptureDataItem;
+
 import java.util.List;
 
 /**
