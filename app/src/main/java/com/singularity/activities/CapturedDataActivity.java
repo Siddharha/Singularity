@@ -1,5 +1,6 @@
 package com.singularity.activities;
 
+import android.arch.persistence.room.Room;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.transition.Explode;
 import android.view.View;
 import android.view.Window;
 
+import com.singularity.AppDatabase;
 import com.singularity.CaptureDataItem;
 import com.singularity.CaptureListAdapter;
 import com.singularity.R;
@@ -23,7 +25,8 @@ public class CapturedDataActivity extends AppCompatActivity {
     private RecyclerView rlCapturedData;
     private CaptureListAdapter captureListAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<CaptureDataItem> captureDataItems;
+    //private ArrayList<CaptureDataItem> captureDataItems;
+    private AppDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,14 +52,14 @@ public class CapturedDataActivity extends AppCompatActivity {
 
     private void genarateCapturedDate() {
 
-        captureDataItems.clear();
-        for(int i=0;i<100;i++){
+      //  captureDataItems.clear();
+        /*for(int i=0;i<100;i++){
             CaptureDataItem captureDataItem = new CaptureDataItem("","",
                     "","","","","","","",i);
 
             captureDataItems.add(captureDataItem);
         }
-
+*/
         captureListAdapter.notifyDataSetChanged();
     }
 
@@ -77,14 +80,23 @@ public class CapturedDataActivity extends AppCompatActivity {
     }
 
     private void initialize() {
+        db = Room.databaseBuilder(this,
+                AppDatabase.class,
+                "Captured")
+                .allowMainThreadQueries()
+                .build();
+
         toolbar = findViewById(R.id.toolbar);
         rlCapturedData = findViewById(R.id.rlCapturedData);
-        captureDataItems = new ArrayList<>();
+       // captureDataItems = new ArrayList<>();
         layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL,
                 false);
 
-        captureListAdapter = new CaptureListAdapter(this,R.layout.captured_data_cell,captureDataItems);
+        captureListAdapter = new CaptureListAdapter(this,
+                        R.layout.captured_data_cell,
+                        db.captureDataDao().getAllCapturedData());
+
         rlCapturedData.setLayoutManager(layoutManager);
         rlCapturedData.setAdapter(captureListAdapter);
     }

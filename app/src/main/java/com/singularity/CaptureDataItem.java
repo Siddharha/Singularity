@@ -24,112 +24,113 @@ public class CaptureDataItem {
     private String ownerEmailId;
 
     @ColumnInfo(name = "owner_contact")
-    private String OwnerContact;
+    private String ownerContact;
 
     @ColumnInfo(name = "owner_aadhar_no")
-    private String OwnerAadharNo;
+    private String ownerAadharNo;
 
     @ColumnInfo(name = "farm_size")
-    private String FarmSize;
+    private String farmSize;
 
     @ColumnInfo(name = "crop")
-    private String Crop;
+    private String crop;
     
     @ColumnInfo(name = "crop_stage")
-    private String CropStage;
+    private String cropStage;
 
     @ColumnInfo(name = "soil_type")
-    private String SoilType;
+    private String soilType;
 
 
-    public CaptureDataItem(String dateOfRecord, String fieldOwner, String ownerEmailId, String ownerContact, String ownerAadharNo, String FarmSize, String crop, String cropStage, String SoilType, int captureDataId) {
+    public CaptureDataItem(String dateOfRecord,
+                           String fieldOwner, String ownerEmailId,
+                           String ownerContact, String ownerAadharNo, String farmSize,
+                           String crop, String cropStage, String soilType) {
         this.dateOfRecord = dateOfRecord;
         this.fieldOwner = fieldOwner;
         this.ownerEmailId = ownerEmailId;
-        OwnerContact = ownerContact;
-        OwnerAadharNo = ownerAadharNo;
-        FarmSize = FarmSize;
-        Crop = crop;
-        CropStage = cropStage;
-        SoilType = SoilType;
-        CaptureDataId = captureDataId;
+        this.ownerContact = ownerContact;
+        this.ownerAadharNo = ownerAadharNo;
+        this.farmSize = farmSize;
+        this.crop = crop;
+        this.cropStage = cropStage;
+        this.soilType = soilType;
     }
 
+    public int getCaptureDataId() {
+        return CaptureDataId;
+    }
 
     public String getDateOfRecord() {
         return dateOfRecord;
-    }
-
-    public void setDateOfRecord(String dateOfRecord) {
-        this.dateOfRecord = dateOfRecord;
     }
 
     public String getFieldOwner() {
         return fieldOwner;
     }
 
-    public void setFieldOwner(String fieldOwner) {
-        this.fieldOwner = fieldOwner;
-    }
-
     public String getOwnerEmailId() {
         return ownerEmailId;
+    }
+
+    public String getOwnerContact() {
+        return ownerContact;
+    }
+
+    public String getOwnerAadharNo() {
+        return ownerAadharNo;
+    }
+
+    public String getFarmSize() {
+        return farmSize;
+    }
+
+    public String getCrop() {
+        return crop;
+    }
+
+    public String getCropStage() {
+        return cropStage;
+    }
+
+    public String getSoilType() {
+        return soilType;
+    }
+
+    public void setDateOfRecord(String dateOfRecord) {
+        this.dateOfRecord = dateOfRecord;
+    }
+
+    public void setFieldOwner(String fieldOwner) {
+        this.fieldOwner = fieldOwner;
     }
 
     public void setOwnerEmailId(String ownerEmailId) {
         this.ownerEmailId = ownerEmailId;
     }
 
-    public String getOwnerContact() {
-        return OwnerContact;
-    }
-
     public void setOwnerContact(String ownerContact) {
-        OwnerContact = ownerContact;
-    }
-
-    public String getOwnerAadharNo() {
-        return OwnerAadharNo;
+        this.ownerContact = ownerContact;
     }
 
     public void setOwnerAadharNo(String ownerAadharNo) {
-        OwnerAadharNo = ownerAadharNo;
+        this.ownerAadharNo = ownerAadharNo;
     }
 
-    public String getFarmSize() {
-        return FarmSize;
-    }
-
-    public void setFarmSize(String FarmSize) {
-        FarmSize = FarmSize;
-    }
-
-    public String getCrop() {
-        return Crop;
+    public void setFarmSize(String farmSize) {
+        this.farmSize = farmSize;
     }
 
     public void setCrop(String crop) {
-        Crop = crop;
-    }
-
-    public String getCropStage() {
-        return CropStage;
+        this.crop = crop;
     }
 
     public void setCropStage(String cropStage) {
-        CropStage = cropStage;
+        this.cropStage = cropStage;
     }
 
-    public String getSoilType() {
-        return SoilType;
-    }
-
-    public void setSoilType(String SoilType) {
-        SoilType = SoilType;
-    }
-
-    public int getCaptureDataId() {
-        return CaptureDataId;
+    public void setSoilType(String soilType) {
+        this.soilType = soilType;
     }
 
     public void setCaptureDataId(int captureDataId) {

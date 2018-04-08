@@ -20,6 +20,7 @@ import com.singularity.activities.MainActivity;
 import com.singularity.activities.MapActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by siddharthamaji on 07/04/18.
@@ -28,10 +29,10 @@ import java.util.ArrayList;
  public class CaptureListAdapter extends RecyclerView.Adapter<CaptureListAdapter.ViewHolder> {
     private Context context;
     private int layout;
-    private ArrayList<CaptureDataItem> captureDataItems;
+    private List<CaptureDataItem> captureDataItems;
     private int lastPosition = -1;
 
-    public CaptureListAdapter(Context context, int layout, ArrayList<CaptureDataItem> captureDataItems) {
+    public CaptureListAdapter(Context context, int layout, List<CaptureDataItem> captureDataItems) {
         this.context = context;
         this.layout = layout;
         this.captureDataItems = captureDataItems;
