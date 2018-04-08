@@ -3,6 +3,7 @@ package com.singularity.activities;
 import android.Manifest;
 import android.animation.Animator;
 import android.app.ActivityOptions;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -42,6 +43,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.singularity.AppDatabase;
+import com.singularity.CaptureDataItem;
 import com.singularity.R;
 
 import java.util.ArrayList;
@@ -56,7 +59,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private boolean IS_DRAWING_MODE;
     private RelativeLayout flDrawingMode;
     private FloatingActionButton btnDrawMap;
-
+    private AppDatabase db;
     private ArrayList<Point> points;
     private ArrayList<LatLng> latLngs;
     private String TAG = "style_map";
@@ -133,6 +136,8 @@ btnDrawMap.setOnClickListener(new View.OnClickListener() {
 
             }
 
+            addDataToDb(latLngs);
+
             drawPoly();
         }else {
             fbMenu.performClick();
@@ -167,6 +172,17 @@ imgMenu.setOnClickListener(new View.OnClickListener() {
         });
     }
 
+    private void addDataToDb(ArrayList<LatLng> latLngs) {
+
+        db.captureDataDao()
+                .insertAll(new CaptureDataItem("",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "","",""));
+    }
     private void clearChildPointsAndPointData() {
         latLngs.clear();
         points.clear();
@@ -246,6 +262,11 @@ imgMenu.setOnClickListener(new View.OnClickListener() {
     }
 
     private void initialize() {
+        db = Room.databaseBuilder(this,
+                AppDatabase.class,
+                "Captured")
+                .allowMainThreadQueries()
+                .build();
         llCapturedData = findViewById(R.id.llCapturedData);
         dvMenu = findViewById(R.id.dvMenu);
         imgMenu = findViewById(R.id.imgMenu);
