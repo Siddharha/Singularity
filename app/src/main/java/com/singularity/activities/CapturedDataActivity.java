@@ -51,8 +51,8 @@ public class CapturedDataActivity extends AppCompatActivity {
 
         captureDataItems.clear();
         for(int i=0;i<100;i++){
-            CaptureDataItem captureDataItem = new CaptureDataItem();
-            captureDataItem.setCaptureDataId(i);
+            CaptureDataItem captureDataItem = new CaptureDataItem("","",
+                    "","","","","","","",i);
 
             captureDataItems.add(captureDataItem);
         }
