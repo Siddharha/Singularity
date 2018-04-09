@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.singularity.R;
 
@@ -30,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fbNext;
     private static final int PERMISSION_ALL = 100;
     private CreativePermission myPermission;
-    private LinearLayout llLoginDesc;
+    private LinearLayout llLoginDesc, llSignUp;
+    private TextView tvSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        llSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getBaseContext(),SignUpActivity.class));
+            }
+        });
+
     }
 
     private void animateLogo() {
@@ -106,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
                         cvUser.animate().alpha(1);
                         cvPass.animate().alpha(1);
+                        llSignUp.animate().alpha(1);
                         fbNext.animate().scaleX(1).scaleY(1).rotation(0).setDuration(1000);
 
                     }
@@ -126,7 +137,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initialize() {
+        llSignUp = findViewById(R.id.llSignUp);
+        llSignUp.setAlpha(0);
         myPermission = new CreativePermission(this,PERMISSION_ALL);
+        tvSignUp = findViewById(R.id.tvSignUp);
+        tvSignUp.setPaintFlags(tvSignUp.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
         imgLogo = findViewById(R.id.imgLogo);
         clMain = findViewById(R.id.clMain);
         cvUser = findViewById(R.id.cvUser);

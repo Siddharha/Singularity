@@ -7,4 +7,5 @@
     <color name="white">#ffffffff</color>
     <color name="red">#ff3d00</color>
     <color name="semi_traansparent">#96ffffff</color>
+    <color name="black">#ff000000</color>
 </resources>

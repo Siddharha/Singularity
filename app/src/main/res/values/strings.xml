@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Singularity</string>
     <string name="desc">you have to verify user by entering your registered User ID and password.</string>
+    <string name="signupDec">Please Enter User ID, and Set a Password to sign up in Singularity</string>
 </resources>

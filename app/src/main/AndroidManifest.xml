@@ -26,7 +26,8 @@
         </activity>
         <activity android:name=".activities.MapActivity" />
         <activity android:name=".activities.CapturedDataActivity" />
-        <activity android:name=".activities.CapturedItemForm"/>
+        <activity android:name=".activities.CapturedItemForm" />
+        <activity android:name=".activities.SignUpActivity"></activity>
     </application>
 
 </manifest>
