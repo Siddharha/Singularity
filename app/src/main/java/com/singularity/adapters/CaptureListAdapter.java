@@ -18,6 +18,7 @@ import com.singularity.beans.CaptureDataItem;
 import com.singularity.R;
 import com.singularity.activities.CapturedDataActivity;
 import com.singularity.activities.CapturedItemForm;
+import com.singularity.beans.CapturedLatLongItem;
 
 import java.util.List;
 
@@ -28,13 +29,13 @@ import java.util.List;
  public class CaptureListAdapter extends RecyclerView.Adapter<CaptureListAdapter.ViewHolder> {
     private Context context;
     private int layout;
-    private List<CaptureDataItem> captureDataItems;
+    private List<CapturedLatLongItem> capturedLatLongItems;
     private int lastPosition = -1;
 
-    public CaptureListAdapter(Context context, int layout, List<CaptureDataItem> captureDataItems) {
+    public CaptureListAdapter(Context context, int layout, List<CapturedLatLongItem> capturedLatLongItems) {
         this.context = context;
         this.layout = layout;
-        this.captureDataItems = captureDataItems;
+        this.capturedLatLongItems = capturedLatLongItems;
     }
 
     // Allows to remember the last item shown on screen
@@ -47,7 +48,7 @@ import java.util.List;
     @Override
     public void onBindViewHolder(final CaptureListAdapter.ViewHolder holder, final int position) {
 
-        holder.tvCaptureId.setText("CAPTU#"+captureDataItems.get(position).getCaptureDataId());
+        holder.tvCaptureId.setText("CAPTU#"+capturedLatLongItems.get(position).getLocationId());
         holder.imgIndct.setColorFilter(Color.parseColor("#ff9900"));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +56,7 @@ import java.util.List;
 
                 Intent intent = new Intent(context, CapturedItemForm.class);
 
-                intent.putExtra("id",captureDataItems.get(position).getCaptureDataId());
+                intent.putExtra("id",capturedLatLongItems.get(position).getLocationId());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     ActivityOptions options = ActivityOptions
                             .makeSceneTransitionAnimation((CapturedDataActivity)context, holder.tvCaptureId, "tvCapture");
@@ -71,7 +72,7 @@ import java.util.List;
 
     @Override
     public int getItemCount() {
-        return captureDataItems.size();
+        return capturedLatLongItems.size();
     }
 
      class ViewHolder extends RecyclerView.ViewHolder {

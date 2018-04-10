@@ -43,6 +43,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.singularity.beans.CapturedLatLongItem;
 import com.singularity.database.AppDatabase;
 import com.singularity.beans.CaptureDataItem;
 import com.singularity.R;
@@ -174,14 +175,18 @@ imgMenu.setOnClickListener(new View.OnClickListener() {
 
     private void addDataToDb(ArrayList<LatLng> latLngs) {
 
-        db.captureDataDao()
+        /*db.captureDataDao()
                 .insertAll(new CaptureDataItem("",
                 "",
                 "",
                 "",
                 "",
                 "",
-                "","",""));
+                "","",""));*/
+
+        for(LatLng ltln: latLngs) {
+            db.latLongDataDao().insertAll(new CapturedLatLongItem(ltln.latitude,ltln.longitude));
+        }
     }
     private void clearChildPointsAndPointData() {
         latLngs.clear();
