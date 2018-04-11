@@ -29,13 +29,13 @@ import java.util.List;
  public class CaptureListAdapter extends RecyclerView.Adapter<CaptureListAdapter.ViewHolder> {
     private Context context;
     private int layout;
-    private List<CapturedLatLongItem> capturedLatLongItems;
+    private List<CaptureDataItem> captureDataItems;
     private int lastPosition = -1;
 
-    public CaptureListAdapter(Context context, int layout, List<CapturedLatLongItem> capturedLatLongItems) {
+    public CaptureListAdapter(Context context, int layout, List<CaptureDataItem> captureDataItems) {
         this.context = context;
         this.layout = layout;
-        this.capturedLatLongItems = capturedLatLongItems;
+        this.captureDataItems = captureDataItems;
     }
 
     // Allows to remember the last item shown on screen
@@ -48,7 +48,7 @@ import java.util.List;
     @Override
     public void onBindViewHolder(final CaptureListAdapter.ViewHolder holder, final int position) {
 
-        holder.tvCaptureId.setText("CAPTU#"+capturedLatLongItems.get(position).getLocationId());
+        holder.tvCaptureId.setText("CAPTU#"+captureDataItems.get(position).getCaptureDataId());
         holder.imgIndct.setColorFilter(Color.parseColor("#ff9900"));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +56,7 @@ import java.util.List;
 
                 Intent intent = new Intent(context, CapturedItemForm.class);
 
-                intent.putExtra("id",capturedLatLongItems.get(position).getLocationId());
+                intent.putExtra("id",captureDataItems.get(position).getCaptureDataId());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     ActivityOptions options = ActivityOptions
                             .makeSceneTransitionAnimation((CapturedDataActivity)context, holder.tvCaptureId, "tvCapture");
@@ -72,7 +72,7 @@ import java.util.List;
 
     @Override
     public int getItemCount() {
-        return capturedLatLongItems.size();
+        return captureDataItems.size();
     }
 
      class ViewHolder extends RecyclerView.ViewHolder {

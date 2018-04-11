@@ -48,7 +48,10 @@ import com.singularity.database.AppDatabase;
 import com.singularity.beans.CaptureDataItem;
 import com.singularity.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -175,19 +178,28 @@ imgMenu.setOnClickListener(new View.OnClickListener() {
 
     private void addDataToDb(ArrayList<LatLng> latLngs) {
 
-        /*db.captureDataDao()
-                .insertAll(new CaptureDataItem("",
+        db.captureDataDao()
+                .insertAll(new CaptureDataItem(getDateTimeStamp(),
                 "",
                 "",
                 "",
                 "",
                 "",
-                "","",""));*/
+                "","",""));
 
+        List<CaptureDataItem> datas = db.captureDataDao().getAllCapturedData();
         for(LatLng ltln: latLngs) {
-            db.latLongDataDao().insertAll(new CapturedLatLongItem(ltln.latitude,ltln.longitude));
+            db.latLongDataDao().
+                    insertAll(new CapturedLatLongItem(datas.get(datas.size()-1).
+                            getCaptureDataId(),ltln.latitude,ltln.longitude));
         }
     }
+
+    private String getDateTimeStamp() {
+        SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        return s.format(new Date());
+    }
+
     private void clearChildPointsAndPointData() {
         latLngs.clear();
         points.clear();

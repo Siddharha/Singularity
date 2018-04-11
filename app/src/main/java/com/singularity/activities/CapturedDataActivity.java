@@ -91,7 +91,7 @@ public class CapturedDataActivity extends AppCompatActivity {
 
         captureListAdapter = new CaptureListAdapter(this,
                         R.layout.captured_data_cell,
-                        db.latLongDataDao().getAllCapturedLatLongData());
+                        db.captureDataDao().getAllCapturedData());
 
         rlCapturedData.setLayoutManager(layoutManager);
         rlCapturedData.setAdapter(captureListAdapter);

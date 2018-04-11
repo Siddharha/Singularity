@@ -2,6 +2,7 @@ package com.singularity.beans;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
 /**
@@ -12,7 +13,8 @@ import android.arch.persistence.room.PrimaryKey;
 public class CaptureDataItem {
 
     @PrimaryKey(autoGenerate = true)
-    private int CaptureDataId;
+    @ColumnInfo(name = "id")
+    private int captureDataId;
 
     @ColumnInfo(name = "date_of_record")
     private String dateOfRecord;
@@ -41,11 +43,10 @@ public class CaptureDataItem {
     @ColumnInfo(name = "soil_type")
     private String soilType;
 
-
-    public CaptureDataItem(String dateOfRecord,
-                           String fieldOwner, String ownerEmailId,
+    public CaptureDataItem(String dateOfRecord, String fieldOwner, String ownerEmailId,
                            String ownerContact, String ownerAadharNo, String farmSize,
                            String crop, String cropStage, String soilType) {
+
         this.dateOfRecord = dateOfRecord;
         this.fieldOwner = fieldOwner;
         this.ownerEmailId = ownerEmailId;
@@ -57,83 +58,84 @@ public class CaptureDataItem {
         this.soilType = soilType;
     }
 
+
     public int getCaptureDataId() {
-        return CaptureDataId;
+        return captureDataId;
+    }
+
+    public void setCaptureDataId(int captureDataId) {
+        this.captureDataId = captureDataId;
     }
 
     public String getDateOfRecord() {
         return dateOfRecord;
     }
 
-    public String getFieldOwner() {
-        return fieldOwner;
-    }
-
-    public String getOwnerEmailId() {
-        return ownerEmailId;
-    }
-
-    public String getOwnerContact() {
-        return ownerContact;
-    }
-
-    public String getOwnerAadharNo() {
-        return ownerAadharNo;
-    }
-
-    public String getFarmSize() {
-        return farmSize;
-    }
-
-    public String getCrop() {
-        return crop;
-    }
-
-    public String getCropStage() {
-        return cropStage;
-    }
-
-    public String getSoilType() {
-        return soilType;
-    }
-
     public void setDateOfRecord(String dateOfRecord) {
         this.dateOfRecord = dateOfRecord;
+    }
+
+    public String getFieldOwner() {
+        return fieldOwner;
     }
 
     public void setFieldOwner(String fieldOwner) {
         this.fieldOwner = fieldOwner;
     }
 
+    public String getOwnerEmailId() {
+        return ownerEmailId;
+    }
+
     public void setOwnerEmailId(String ownerEmailId) {
         this.ownerEmailId = ownerEmailId;
+    }
+
+    public String getOwnerContact() {
+        return ownerContact;
     }
 
     public void setOwnerContact(String ownerContact) {
         this.ownerContact = ownerContact;
     }
 
+    public String getOwnerAadharNo() {
+        return ownerAadharNo;
+    }
+
     public void setOwnerAadharNo(String ownerAadharNo) {
         this.ownerAadharNo = ownerAadharNo;
+    }
+
+    public String getFarmSize() {
+        return farmSize;
     }
 
     public void setFarmSize(String farmSize) {
         this.farmSize = farmSize;
     }
 
+    public String getCrop() {
+        return crop;
+    }
+
     public void setCrop(String crop) {
         this.crop = crop;
+    }
+
+    public String getCropStage() {
+        return cropStage;
     }
 
     public void setCropStage(String cropStage) {
         this.cropStage = cropStage;
     }
 
-    public void setSoilType(String soilType) {
-        this.soilType = soilType;
+    public String getSoilType() {
+        return soilType;
     }
 
-    public void setCaptureDataId(int captureDataId) {
-        CaptureDataId = captureDataId;
+    public void setSoilType(String soilType) {
+        this.soilType = soilType;
     }
 }
