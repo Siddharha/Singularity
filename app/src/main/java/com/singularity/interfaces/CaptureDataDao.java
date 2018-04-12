@@ -19,6 +19,9 @@ public interface CaptureDataDao {
     @Query("SELECT * FROM CaptureDataItem")
     List<CaptureDataItem> getAllCapturedData();
 
+    @Query("SELECT * FROM CaptureDataItem WHERE id = :captureDataId")
+    CaptureDataItem getDataById(int captureDataId);
+
     @Insert
     void insertAll(CaptureDataItem... captureDataItems);
 

@@ -29,6 +29,23 @@
         <android.support.v7.widget.CardView
             android:id="@+id/cvUserS"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp">
+
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@color/transparent"
+                android:ems="10"
+                android:hint="Name"
+                android:inputType="text" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cvUserS"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp">
 
@@ -49,13 +66,14 @@
             android:layout_margin="5dp">
 
             <EditText
+                android:id="@+id/etContact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@color/transparent"
                 android:ems="10"
                 android:hint="Owner Contact"
-                android:inputType="textPassword" />
+                android:inputType="number" />
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView

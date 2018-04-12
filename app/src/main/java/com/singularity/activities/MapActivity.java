@@ -3,8 +3,10 @@ package com.singularity.activities;
 import android.Manifest;
 import android.animation.Animator;
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
 import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -23,14 +25,17 @@ import android.os.Bundle;
 import android.transition.Explode;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -98,7 +103,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     gmap.getUiSettings().setScrollGesturesEnabled(true);
 
                     flDrawingMode.animate().alpha(0);
-                    clearChildPointsAndPointData();
+                    //clearChildPointsAndPointData();
+                    flDrawingMode.removeViews(1,flDrawingMode.getChildCount()-1);
 
                 }
             }
@@ -140,8 +146,6 @@ btnDrawMap.setOnClickListener(new View.OnClickListener() {
 
             }
 
-            addDataToDb(latLngs);
-
             drawPoly();
         }else {
             fbMenu.performClick();
@@ -176,13 +180,13 @@ imgMenu.setOnClickListener(new View.OnClickListener() {
         });
     }
 
-    private void addDataToDb(ArrayList<LatLng> latLngs) {
+    private void addDataToDb(ArrayList<LatLng> latLngs, String name, String number) {
 
         db.captureDataDao()
                 .insertAll(new CaptureDataItem(getDateTimeStamp(),
+                name,
                 "",
-                "",
-                "",
+                number,
                 "",
                 "",
                 "","",""));
@@ -202,7 +206,7 @@ imgMenu.setOnClickListener(new View.OnClickListener() {
 
     private void clearChildPointsAndPointData() {
         latLngs.clear();
-        points.clear();
+       points.clear();
 
         flDrawingMode.removeViews(1,flDrawingMode.getChildCount()-1);
     }
@@ -213,7 +217,8 @@ imgMenu.setOnClickListener(new View.OnClickListener() {
         polylineOptions.add(latLngs.get(0));
 
         Polyline line = gmap.addPolyline(polylineOptions);
-        clearChildPointsAndPointData();
+        flDrawingMode.removeViews(1,flDrawingMode.getChildCount()-1);
+        //clearChildPointsAndPointData();
     }
 
     private View.OnTouchListener handleTouch = new View.OnTouchListener() {
@@ -338,7 +343,7 @@ imgMenu.setOnClickListener(new View.OnClickListener() {
         //LatLng myLocation
 
         gmap = googleMap;
-
+        gmap.setMapType(gmap.MAP_TYPE_SATELLITE);
         View locationButton = ((View) mapFragment.getView().findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
         RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
 
@@ -411,7 +416,7 @@ imgMenu.setOnClickListener(new View.OnClickListener() {
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
-                    .zoom(12)                   // Sets the zoom
+                    .zoom(18)                   // Sets the zoom
                     .bearing(0)                // Sets the orientation of the camera to east
                     .tilt(0)                   // Sets the tilt of the camera to 30 degrees
                     .build();                   // Creates a CameraPosition from the builder
@@ -419,5 +424,41 @@ imgMenu.setOnClickListener(new View.OnClickListener() {
         }
     }
 
+        public void clkCapture(View view){
+               showAreaOwnerInfoPopup().show();
+        }
+
+    private AlertDialog showAreaOwnerInfoPopup() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.owner_popup_info, null);
+        final EditText etName = dialogView.findViewById(R.id.etName);
+        final EditText etPhone = dialogView.findViewById(R.id.etPhone);
+
+
+        builder.setView(dialogView);
+
+        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                if(etName.getText().toString().isEmpty() || etPhone.getText().toString().isEmpty()){
+                    Toast.makeText(MapActivity.this, "Please fill up Req. info to capture data.", Toast.LENGTH_SHORT).show();
+
+                }else {
+                    addDataToDb(latLngs, etName.getText().toString(),etPhone.getText().toString());
+                    dialogInterface.dismiss();
+                }
+
+            }
+        });
+
+        return builder.create();
+    }
+
+    public void clkClearMap(View view){
+            gmap.clear();
+            clearChildPointsAndPointData();
+    }
 
 }
